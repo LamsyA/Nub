@@ -1,5 +1,7 @@
 
 const background = "https://www.avanse.com/viewPagesAssets/img/study-in-india-banner.webp"
+
+import axios from "axios";
 const Hero = () => {
   return( 
     <div className="flex">
@@ -14,13 +16,13 @@ const Hero = () => {
     zIndex: -2
   }}
   >
-    <div className="flex justify-start items-center position "
-    
-    >
+    <div className="flex justify-start items-center position ">
       <div className="flex p-40 font-bold text-2xl text-black ">
         Hero
       </div>
-      
+      <form>
+        
+      </form>
     </div>  
     </div>
     </div>

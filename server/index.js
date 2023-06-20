@@ -1,18 +1,20 @@
-const express = require('express')
-const app = express()
-const db = require('./models')
-const cors = require('cors')
-app.use(express.json())
-app.use(cors())
-// routes
+const express = require("express");
+const app = express();
+const cors = require("cors");
 
-const postRouter = require('./routes/Posts')
+app.use(express.json());
+app.use(cors());
 
-app.use('/posts', postRouter)
+const db = require("./models");
 
-db.sequelize.sync().then(() =>{
-    app.listen(3001, () => {
-        console.log('listening on port 3001')
-    });
+// Routers
+const postRouter = require("./routes/Posts");
+app.use("/posts", postRouter);
+const commentsRouter = require("./routes/Comments");
+app.use("/comments", commentsRouter);
+
+db.sequelize.sync().then(() => {
+  app.listen(3001, () => {
+    console.log("Server running on port 3001");
+  });
 });
-

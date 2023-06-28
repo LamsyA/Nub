@@ -12,7 +12,7 @@ import axios from "axios";
 
 function App() {
 
-  const [authState, setAuthState] = useState(false)
+  const [authState, setAuthState] = useState({username: "", id: "", status: false});
   useEffect(()=> {
     if(localStorage.getItem("accessToken")){
       axios.get('http://localhost:3001/auth/auth', {
@@ -21,9 +21,13 @@ function App() {
         }
       }).then((response)=>{
         if(response.data.error) {
-          setAuthState(false)
+          setAuthState({...authState, status: false})
         }else {
-          setAuthState(true)
+          setAuthState({
+            username: response.data.username,
+            id: response.data.id,
+            status: true
+          })
         }
       })
 
@@ -32,7 +36,7 @@ function App() {
 
   const logout = () => {
     localStorage.removeItem("accessToken")
-    setAuthState(false)
+    setAuthState({username: "", id: "", status: false})
   }
   return (
 
@@ -41,17 +45,19 @@ function App() {
       <div className="navbar">
         <Link to="/createpost"> Create A post</Link>
         <Link to="/"> Home Page</Link>
-        {!authState ? (
+        {!authState.status ? (
               <>
                 <Link to="/login"> Login</Link>
                 <Link to="/registration"> Registration</Link>
               </>
-            ) : (
+            ) : (<div>
               <button onClick={logout}>
                 Logout
+        <h1>{authState.username}</h1>
               </button>
+              
+              </div>
             )}
-        
       </div>
 
       <Routes>
